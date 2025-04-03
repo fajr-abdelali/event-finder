@@ -6,6 +6,7 @@ import EventList from "./EventList";
 import { Event, events as initialEvents } from "../../lib/events";
 import { Card, Flex, Layout } from "antd";
 import dayjs, { Dayjs } from "dayjs";
+import EventDetails from "./EventDetails"; // Make sure to import EventDetails
 const { Content, Sider } = Layout;
 
 const EventFinder = () => {
@@ -21,7 +22,6 @@ const EventFinder = () => {
       (event) => filter === "All" || event.category === filter
     );
 
-    // Apply date filter if dates are selected
     if (dateRange[0] && dateRange[1]) {
       const startDate = dateRange[0].startOf("day");
       const endDate = dateRange[1].endOf("day");
@@ -30,7 +30,6 @@ const EventFinder = () => {
         const eventStart = dayjs(event.startDate).startOf("day");
         const eventEnd = dayjs(event.endDate || event.startDate).endOf("day");
 
-        // Check if event overlaps with selected date range
         return (
           (eventStart.isAfter(startDate) && eventStart.isBefore(endDate)) ||
           (eventEnd.isAfter(startDate) && eventEnd.isBefore(endDate)) ||
@@ -44,8 +43,15 @@ const EventFinder = () => {
     return result;
   }, [filter, dateRange]);
 
+  const handleCloseDetails = () => {
+    setSelectedEvent(null);
+  };
+
   return (
     <Layout style={{ minHeight: "100vh" }}>
+      {/* Overlay for when details are open */}
+      <div className={`overlay ${selectedEvent ? 'visible' : ''}`} onClick={handleCloseDetails} />
+      
       <Content style={{ display: "flex", height: "100vh" }}>
         <div style={{ flex: 1 }}>
           <Map events={filteredEvents} />
@@ -66,7 +72,7 @@ const EventFinder = () => {
           }}
         >
           <Card title="Event Finder">
-            <Flex gap="middle" align="start" >
+            <Flex gap="middle" align="start">
               <EventFilter filter={filter} setFilter={setFilter} />
               <DateRangeFilter
                 dateRange={dateRange}
@@ -76,37 +82,18 @@ const EventFinder = () => {
             <EventList
               events={filteredEvents}
               onSelectEvent={setSelectedEvent}
+              selectedEventId={selectedEvent?.id}
             />
-
-            {selectedEvent && (
-              <div className="mt-6 pt-6 border-t border-gray-200">
-                <h2 className="text-xl font-bold mb-4">Event Details</h2>
-                <p className="font-medium">{selectedEvent.name}</p>
-                <p className="text-sm">
-                  <span className="font-medium">Category:</span>{" "}
-                  {selectedEvent.category}
-                </p>
-                <p className="text-sm">
-                  <span className="font-medium">Date:</span>{" "}
-                  {dayjs(selectedEvent.startDate).format("MMMM D, YYYY")}
-                  {selectedEvent.endDate &&
-                    ` - ${dayjs(selectedEvent.endDate).format("MMMM D, YYYY")}`}
-                </p>
-                <p className="text-sm">
-                  <span className="font-medium">Location:</span>{" "}
-                  {selectedEvent.lat.toFixed(4)}, {selectedEvent.lng.toFixed(4)}
-                </p>
-                <button
-                  className="mt-4 bg-primary text-white border-none px-4 py-2 rounded cursor-pointer"
-                  onClick={() => setSelectedEvent(null)}
-                >
-                  Close Details
-                </button>
-              </div>
-            )}
           </Card>
         </Sider>
       </Content>
+
+      {/* Slide-up panel for event details */}
+      <div className={`event-details-panel ${selectedEvent ? 'open' : ''}`}>
+        {selectedEvent && (
+          <EventDetails event={selectedEvent} onClose={handleCloseDetails} />
+        )}
+      </div>
     </Layout>
   );
 };

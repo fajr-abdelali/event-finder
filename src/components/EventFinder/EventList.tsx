@@ -42,13 +42,6 @@ const EventList: React.FC<EventListProps> = ({
                 : "hover:bg-gray-50"
             }
           `}
-          extra={
-            <img
-              width={100}
-              alt="logo"
-              src="https://gw.alipayobjects.com/zos/rmsportal/mqaQswcyDLcXyDKnZfES.png"
-            />
-          }
         >
           <div className="w-full">
             <h3 className="font-semibold text-gray-900">{event.name}</h3>
@@ -66,7 +59,6 @@ const EventList: React.FC<EventListProps> = ({
               >
                 {event.category}
               </span>
-
               <span className="text-sm text-gray-500">
                 {new Date(event.startDate).toLocaleDateString("en-US", {
                   month: "short",

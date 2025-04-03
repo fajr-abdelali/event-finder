@@ -39,3 +39,41 @@
     font-size: 12px;
     color: var(--text-secondary);
   }
+
+  /* Add these new styles */
+.event-details-panel {
+  position: fixed;
+  bottom: -100%;
+  left: 0;
+  right: 0;
+  background: white;
+  box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 16px 16px 0 0;
+  padding: 20px;
+  z-index: 1000;
+  transition: bottom 0.3s ease-in-out;
+  max-height: 80vh;
+  overflow-y: auto;
+}
+
+.event-details-panel.open {
+  bottom: 0;
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease-in-out;
+}
+
+.overlay.visible {
+  opacity: 1;
+  pointer-events: auto;
+}

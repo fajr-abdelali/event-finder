@@ -1,7 +1,8 @@
 import React from 'react';
 import { Event } from '../../lib/events';
-import { Button } from 'antd';
+import { Button, Card } from 'antd';
 import dayjs from 'dayjs';
+import { CloseOutlined } from '@ant-design/icons';
 
 interface EventDetailsProps {
   event: Event;
@@ -10,8 +11,9 @@ interface EventDetailsProps {
 
 const EventDetails = ({ event, onClose }: EventDetailsProps) => {
   return (
-    <div className="mt-6 pt-6 border-t border-gray-200">
-      <h2 className="text-xl font-bold mb-4 text-gray-900">Event Details</h2>
+    <div>
+      {/* <h2 className="text-xl font-bold mb-4 text-gray-900">Event Details <span className='' onClick={onClose}>X</span> </h2> */}
+      <Card title='Event Details' extra={<a href="#" onClick={onClose}> <CloseOutlined /> </a>} >
       <div className="space-y-3">
         <h3 className="text-lg font-semibold text-gray-900">{event.name}</h3>
         {event.description && (
@@ -38,10 +40,12 @@ const EventDetails = ({ event, onClose }: EventDetailsProps) => {
           type="primary" 
           className="mt-4" 
           onClick={onClose}
+          block
         >
-          Close Details
+          More details
         </Button>
       </div>
+      </Card>
     </div>
   );
 };
