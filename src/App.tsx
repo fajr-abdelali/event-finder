@@ -3,6 +3,7 @@ import { ConfigProvider } from 'antd';
 
 function App() {
   return (
+    // Apply custom theme to all Ant Design components
     <ConfigProvider
       theme={{
         token: {

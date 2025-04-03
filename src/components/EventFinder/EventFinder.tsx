@@ -1,3 +1,9 @@
+/**
+ * Main component for the Event Finder application
+ * - Manages state for filters and selected event
+ * - Coordinates between map and list views
+ * - Implements slide-up details panel
+ */
 import React, { useState, useMemo } from "react";
 import Map from "../Map/Map";
 import EventFilter from "./EventFilter";
@@ -6,7 +12,7 @@ import EventList from "./EventList";
 import { Event, events as initialEvents } from "../../lib/events";
 import { Card, Flex, Layout } from "antd";
 import dayjs, { Dayjs } from "dayjs";
-import EventDetails from "./EventDetails"; // Make sure to import EventDetails
+import EventDetails from "./EventDetails";
 const { Content, Sider } = Layout;
 
 const EventFinder = () => {
@@ -17,11 +23,13 @@ const EventFinder = () => {
   ]);
   const [selectedEvent, setSelectedEvent] = useState<Event | null>(null);
 
+  // Filter events based on current filters
   const filteredEvents = useMemo(() => {
     let result = initialEvents.filter(
       (event) => filter === "All" || event.category === filter
     );
 
+    // Apply date filtering if dates are selected
     if (dateRange[0] && dateRange[1]) {
       const startDate = dateRange[0].startOf("day");
       const endDate = dateRange[1].endOf("day");
@@ -30,6 +38,7 @@ const EventFinder = () => {
         const eventStart = dayjs(event.startDate).startOf("day");
         const eventEnd = dayjs(event.endDate || event.startDate).endOf("day");
 
+        // Check if event overlaps with selected date range
         return (
           (eventStart.isAfter(startDate) && eventStart.isBefore(endDate)) ||
           (eventEnd.isAfter(startDate) && eventEnd.isBefore(endDate)) ||
@@ -43,6 +52,7 @@ const EventFinder = () => {
     return result;
   }, [filter, dateRange]);
 
+  // Close event details panel
   const handleCloseDetails = () => {
     setSelectedEvent(null);
   };
@@ -56,6 +66,8 @@ const EventFinder = () => {
         <div style={{ flex: 1 }}>
           <Map events={filteredEvents} />
         </div>
+
+        {/* Sidebar with filters and event list */}
         <Sider
           width={400}
           style={{
@@ -79,6 +91,8 @@ const EventFinder = () => {
                 setDateRange={setDateRange}
               />
             </Flex>
+
+            {/* List of filtered events */}
             <EventList
               events={filteredEvents}
               onSelectEvent={setSelectedEvent}

@@ -1,3 +1,9 @@
+/**
+ * Component for displaying detailed event information
+ * - Shows all relevant event data
+ * - Provides close button
+ * - Responsive layout
+ */
 import React from 'react';
 import { Event } from '../../lib/events';
 import { Button, Card } from 'antd';
