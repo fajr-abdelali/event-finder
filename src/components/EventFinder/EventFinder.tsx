@@ -6,7 +6,7 @@ import EventList from "./EventList";
 import { Event, events as initialEvents } from "../../lib/events";
 import { Card, Flex, Layout } from "antd";
 import dayjs, { Dayjs } from "dayjs";
-const { Header, Content, Sider } = Layout;
+const { Content, Sider } = Layout;
 
 const EventFinder = () => {
   const [filter, setFilter] = useState<string>("All");

@@ -1,6 +1,6 @@
 import React from "react";
 import { DatePicker } from "antd";
-import dayjs, { Dayjs } from "dayjs";
+import { Dayjs } from "dayjs";
 const { RangePicker } = DatePicker;
 
 interface DateRangeFilterProps {

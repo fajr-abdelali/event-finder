@@ -1,7 +1,6 @@
 import React from "react";
-import { Badge, List, Space } from "antd";
+import { List } from "antd";
 import { Event } from "../../lib/events";
-import EventCard from "../ui/EventCard";
 
 interface EventListProps {
   events: Event[];
