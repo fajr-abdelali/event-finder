@@ -1,9 +1,19 @@
 import EventFinder from './components/EventFinder/EventFinder';
-import './App.css';
-import './styles/app.less';
+import { ConfigProvider } from 'antd';
 
 function App() {
-  return <EventFinder />;
+  return (
+    <ConfigProvider
+      theme={{
+        token: {
+          colorPrimary: '#6B48FF',
+          borderRadius: 8,
+        },
+      }}
+    >
+      <EventFinder />
+    </ConfigProvider>
+  );
 }
 
 export default App;

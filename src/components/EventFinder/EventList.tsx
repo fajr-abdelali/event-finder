@@ -1,5 +1,5 @@
 import React from "react";
-import Card from "../ui/Card";
+import {Card} from 'antd'
 import { Event } from "../../lib/events";
 
 interface EventListProps {
@@ -15,8 +15,7 @@ const EventList = ({ events, onSelectEvent }: EventListProps) => {
   return (
     <div className="event-list">
       {events.map((event) => (
-        <Card key={event.id} onClick={() => onSelectEvent(event)}>
-          <h3>{event.name}</h3>
+        <Card title={event.name} key={event.id} onClick={() => onSelectEvent(event)}>
           <span className="event-category">{event.category}</span>
         </Card>
       ))}

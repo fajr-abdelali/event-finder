@@ -1,4 +1,5 @@
 import React from "react";
+import { Card as AntdCard } from "antd";
 
 interface CardProps {
   children: React.ReactNode;
@@ -7,9 +8,13 @@ interface CardProps {
 
 const Card = ({ children, onClick }: CardProps) => {
   return (
-    <div className="card" onClick={onClick}>
+    <AntdCard 
+      hoverable 
+      onClick={onClick}
+      style={{ marginBottom: 16 }}
+    >
       {children}
-    </div>
+    </AntdCard>
   );
 };
 
