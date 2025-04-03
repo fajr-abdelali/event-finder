@@ -1,4 +1,5 @@
 import React from "react";
+import { Select } from "antd";
 import { eventCategories } from "../../lib/events";
 
 interface EventFilterProps {
@@ -8,17 +9,15 @@ interface EventFilterProps {
 
 const EventFilter = ({ filter, setFilter }: EventFilterProps) => {
   return (
-    <select
-      className="event-filter"
+    <Select
+      className="w-full mb-4"
       value={filter}
-      onChange={(e) => setFilter(e.target.value)}
-    >
-      {eventCategories.map((category) => (
-        <option key={category} value={category}>
-          {category === "All" ? "All Categories" : category}
-        </option>
-      ))}
-    </select>
+      onChange={setFilter}
+      options={eventCategories.map((category) => ({
+        value: category,
+        label: category === "All" ? "All Categories" : category,
+      }))}
+    />
   );
 };
 
